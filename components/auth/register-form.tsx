@@ -19,7 +19,7 @@ import {
 } from "../ui/form"
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import {register} from "../../actions/register"
+import {register} from "@/actions/register"
 
 export const RegisterForm = () => {
 
@@ -41,7 +41,7 @@ export const RegisterForm = () => {
 
         startTransition(()=>{
             register(values)
-                .then((data)=>{
+                .then((data )=>{
                     setError(data.error)
                     setSuccess(data.success)
                 })
