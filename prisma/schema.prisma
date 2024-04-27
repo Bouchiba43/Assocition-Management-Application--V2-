@@ -10,6 +10,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum userRole {
+  USER
+  ADMIN
+  SPONSOR
+}
 
 model Account {
   id                 String  @id @default(cuid())
@@ -37,5 +42,6 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
+  role          userRole  @default(USER)
   accounts      Account[]
 }
