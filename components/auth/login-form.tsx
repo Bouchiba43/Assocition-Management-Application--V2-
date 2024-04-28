@@ -25,7 +25,7 @@ import {login} from "../../actions/login"
 export const LoginForm = () => {
 
     const searchParams = useSearchParams();
-    const urlError = searchParams.get("error") === "OAuthAccountNotLinkedError" ? "This account is already registered with another provider. Please login with the provider you used to register." : "Invalid email or password. Please try again.";
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinkedError" ? "This account is already registered with another provider. Please login with the provider you used to register." : "";
 
     const [error,setError] = useState<string | undefined>();
     const [success , setSuccess] = useState<string | undefined>();
@@ -46,8 +46,7 @@ export const LoginForm = () => {
             login(values)
                 .then((data)=>{
                     setError(data?.error)
-                    // TODO : add when we add 2fa
-                    // setSuccess(data?.success)
+                    setSuccess(data?.success)
                 })
         })
     }

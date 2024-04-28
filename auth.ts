@@ -34,6 +34,19 @@ export const {
     },
     callbacks: {
 
+        async signIn({ user , account}) {
+
+            if (account?.provider != 'credentials') return 'true'
+            
+            //tell the compiler your are sure the name is not null by using "!"
+            const existingUser = await getUserById(user.id!)
+            if (!existingUser?.emailVerified) return false
+
+            //TODO: Add 2fa check here
+
+            return true
+        },
+
         async session({ session, token }) {
             console.log({ sessionToken: token })
             if (token.sub && session.user) {
