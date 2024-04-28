@@ -2,6 +2,7 @@
 
 import * as z from "zod"
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { CardWrapper } from './card-wrapper';
 import { useForm } from "react-hook-form"
@@ -23,6 +24,9 @@ import {login} from "../../actions/login"
 
 export const LoginForm = () => {
 
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinkedError" ? "This account is already registered with another provider. Please login with the provider you used to register." : "Invalid email or password. Please try again.";
+
     const [error,setError] = useState<string | undefined>();
     const [success , setSuccess] = useState<string | undefined>();
     const [isPending,startTransition] = useTransition();
@@ -41,8 +45,9 @@ export const LoginForm = () => {
         startTransition(()=>{
             login(values)
                 .then((data)=>{
-                    setError(data.error)
-                    setSuccess(data.success)
+                    setError(data?.error)
+                    // TODO : add when we add 2fa
+                    // setSuccess(data?.success)
                 })
         })
     }
@@ -96,7 +101,7 @@ export const LoginForm = () => {
                                 </FormItem>
                             )} />
                     </div>
-                    <FormError message={error}/>
+                    <FormError message={error || urlError}/>
                     <FormSuccess message={success}/>
                     <Button
                         disabled={isPending}
