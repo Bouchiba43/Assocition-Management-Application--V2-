@@ -45,3 +45,45 @@ export const sendVerificationEmail = async (
         html: htmlContent
     });
 }
+
+export const sendPasswordResetEmail = async (
+    email: string,
+    token: string
+) => {
+    const resetLink = `http://localhost:3000/auth/new-password?token=${token}`
+
+    const htmlContent = `
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+            <h1 style="color: #333;">Password Reset</h1>
+            <p>We received a request to reset your password.</p>
+            <p>
+                Click the link below to reset your password:
+            </p>
+            <p>
+                <a
+                href="${resetLink}"
+                style="
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 5px;
+                "
+                >
+                Reset Password
+                </a>
+            </p>
+            <p>If you didn't request a password reset, please ignore this email.</p>
+            <p>Thank you!</p>
+            <p>Bouchiba Dev</p>
+            </div>
+        `;
+
+        await resend.emails.send({
+            from: 'onboarding@resend.dev',
+            to: email,
+            subject: 'Reset your password',
+            html: htmlContent
+        });
+}
