@@ -47,6 +47,7 @@ export const NewVerificationForm = () => {
             showSocial={false}
         >
             <div className="flex items-center w-full justify-center">
+                
                 {!success && !error &&(
                     <BeatLoader />
                 )}

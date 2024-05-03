@@ -3,6 +3,31 @@ import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+export const sendTwoFactorTokenEmail = async (
+    email: string,
+    token: string
+) => {
+
+
+    const htmlContent = `
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+            <h1 style="color: #333;">Two-Factor Authentication</h1>
+            <p>Here is your two-factor authentication code:</p>
+            <p style="font-size: 24px; font-weight: bold;">${token}</p>
+            <p>If you didn't request this code, please ignore this email.</p>
+            <p>Thank you!</p>
+            <p>Bouchiba Dev</p>
+            </div>
+        `;
+
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'Two-Factor Authentication Code',
+        html: htmlContent
+    });
+}
+
 export const sendVerificationEmail = async (
     email: string,
     token: string
@@ -80,10 +105,10 @@ export const sendPasswordResetEmail = async (
             </div>
         `;
 
-        await resend.emails.send({
-            from: 'onboarding@resend.dev',
-            to: email,
-            subject: 'Reset your password',
-            html: htmlContent
-        });
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'Reset your password',
+        html: htmlContent
+    });
 }
