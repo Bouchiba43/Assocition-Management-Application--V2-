@@ -19,9 +19,11 @@ const AdminPage = () => {
         <CardContent className="space-y-4">
             <RoleGate allowedRole={userRole.ADMIN}>
                 <FormSuccess message="You have permission to view this content!"/>
+                <div className="flex justify-center ">
                 <Button>
                 <Link href="http://localhost:3100/dashboard">Go to Admin Dashboard</Link>
                 </Button>
+                </div>
             </RoleGate>
         </CardContent>
     </Card>
